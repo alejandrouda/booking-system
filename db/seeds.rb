@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+p 'Creating restaurantes...'
+
+takumi = Restaurante.new(name: 'Takumi',
+                         owner_first_name: 'Alejandro',
+                         owner_last_name: 'Udaquiola',
+                         owner_email: 'alejandro.udaquiola@gmail.com',
+                         plan: 'premium'
+
+)
+takumi.save
+p takumi

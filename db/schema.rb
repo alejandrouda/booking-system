@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_24_160219) do
+ActiveRecord::Schema.define(version: 2021_07_12_170547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 2021_06_24_160219) do
     t.time "date_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "restaurante_id", null: false
+    t.index ["restaurante_id"], name: "index_bookings_on_restaurante_id"
   end
 
   create_table "client_tags", force: :cascade do |t|
@@ -44,6 +46,22 @@ ActiveRecord::Schema.define(version: 2021_06_24_160219) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "restaurantes", force: :cascade do |t|
+    t.string "name"
+    t.string "owner_first_name"
+    t.string "owner_last_name"
+    t.string "owner_email"
+    t.string "plan"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "table_tags", force: :cascade do |t|
     t.bigint "booking_id", null: false
     t.bigint "table_id", null: false
@@ -60,6 +78,8 @@ ActiveRecord::Schema.define(version: 2021_06_24_160219) do
     t.integer "max_pax"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "sections_id", null: false
+    t.index ["sections_id"], name: "index_tables_on_sections_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -70,12 +90,17 @@ ActiveRecord::Schema.define(version: 2021_06_24_160219) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "restaurante_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["restaurante_id"], name: "index_users_on_restaurante_id"
   end
 
+  add_foreign_key "bookings", "restaurantes"
   add_foreign_key "client_tags", "bookings"
   add_foreign_key "client_tags", "clients"
   add_foreign_key "table_tags", "bookings"
   add_foreign_key "table_tags", "tables"
+  add_foreign_key "tables", "sections", column: "sections_id"
+  add_foreign_key "users", "restaurantes"
 end

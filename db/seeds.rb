@@ -7,14 +7,31 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
+p 'Deleting user restaurante tags...'
+
+UserRestauranteTag.delete_all
+
+p 'User Restaurante Tags deleted!'
+
+p 'Deleting restaurantes...'
+
+Restaurante.delete_all
+
+p 'Restaurantes deleted!'
+
 p 'Creating restaurantes...'
 
 takumi = Restaurante.new(name: 'Takumi',
-                         owner_first_name: 'Alejandro',
-                         owner_last_name: 'Udaquiola',
-                         owner_email: 'alejandro.udaquiola@gmail.com',
-                         plan: 'premium'
-
 )
 takumi.save
 p takumi
+
+p 'Creating user restaurante tags...'
+
+tag_takumi_ale = UserRestauranteTag.new(
+                                        user_id: 1,
+                                        
+)
+tag_takumi_ale.restaurante_id = takumi.id
+tag_takumi_ale.save
+p tag_takumi_ale

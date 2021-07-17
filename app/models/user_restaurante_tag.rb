@@ -1,0 +1,2 @@
+class UserRestauranteTag < ApplicationRecord
+end
